@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SayAAAA</string>
+    <string name="action_settings">Settings</string>
+    <string name="notifications_channel_description">Heart Rate</string>
+</resources>
