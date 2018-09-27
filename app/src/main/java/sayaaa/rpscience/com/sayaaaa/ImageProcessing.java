@@ -2,6 +2,7 @@ package sayaaa.rpscience.com.sayaaaa;
 
 import android.graphics.Color;
 import android.hardware.Camera;
+import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -101,6 +102,7 @@ public class ImageProcessing {
         int height = size.height;
 
         int imgAvg = decodeYUV420SPtoRedAvg(data.clone(), width, height);
+        Log.v("fafa", "imgAvg " + imgAvg);
         // Log.i(TAG, "imgAvg="+imgAvg);
         if (imgAvg == 0 || imgAvg == 255) {
             processing.set(false);
@@ -117,6 +119,7 @@ public class ImageProcessing {
         }
 
         int rollingAverage = (averageArrayCnt > 0) ? (averageArrayAvg / averageArrayCnt) : 0;
+        Log.v("fafa", "rollingAverage " + rollingAverage);
         TYPE newType = currentType;
         if (imgAvg < rollingAverage) {
             newType = TYPE.RED;

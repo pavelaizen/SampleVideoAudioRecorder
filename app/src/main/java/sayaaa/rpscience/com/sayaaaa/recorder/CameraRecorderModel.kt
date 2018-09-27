@@ -5,6 +5,7 @@ package sayaaa.rpscience.com.sayaaaa.recorder
 import android.app.Activity
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.graphics.ImageFormat
 import android.hardware.Camera
 import android.util.Log
 import android.view.Surface
@@ -27,9 +28,11 @@ class CameraRecorderModel : ViewModel() {
     private val previewCallback = Camera.PreviewCallback { data, camera ->
         Log.v("fafafa", "" + data.size + " " + data.toHexString())
         val size = camera.parameters.previewSize
+        camera.parameters.previewFormat
         val width = size.width
         val height = size.height
         logger.writeVideoRecord(data, width, height)
+        logger.saveJpeg(data, width, height)
         launch(CommonPool) {
             imageProcessing.processFrame(data, camera)
         }
@@ -51,6 +54,7 @@ class CameraRecorderModel : ViewModel() {
                     parameters.setPreviewSize(size.width, size.height)
                     Log.d("fafafa", "Using width=" + size.width + " height=" + size.height)
                 }
+                parameters.previewFormat = ImageFormat.NV21
                 camera?.parameters = parameters
             }
             camera?.setDisplayOrientation(displayOrientation)
